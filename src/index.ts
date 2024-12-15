@@ -1,4 +1,12 @@
 import app from './app';
+import cors from 'cors';
+
+app.use(
+  cors({
+    origin: '*', // Allow all origins (for dev only)
+  })
+);
+
 
 const PORT = process.env.PORT || 3000;
 
