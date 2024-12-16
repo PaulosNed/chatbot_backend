@@ -56,6 +56,34 @@ conversationRoutes.post('/conversations', createConversation);
  *                   title:
  *                     type: string
  *                     description: Title of the conversation
+ *                   userId:
+ *                     type: integer
+ *                     description: ID of the user
+ *                   createdAt:
+ *                     type: string
+ *                     format: date-time
+ *                     description: Creation date of the conversation
+ *                   messages:
+ *                     type: array
+ *                     items:
+ *                       type: object
+ *                       properties:
+ *                         id:
+ *                           type: integer
+ *                           description: Unique ID of the message
+ *                         content:
+ *                           type: string
+ *                           description: Content of the message
+ *                         isUser:
+ *                           type: boolean
+ *                           description: Indicates if the message is from the user
+ *                         conversationId:
+ *                           type: integer
+ *                           description: ID of the conversation
+ *                         createdAt:
+ *                           type: string
+ *                           format: date-time
+ *                           description: Creation date of the message
  */
 conversationRoutes.get('/conversations', getConversations);
 
@@ -73,7 +101,7 @@ conversationRoutes.get('/conversations', getConversations);
  *           type: integer
  *     responses:
  *       200:
- *         description: Conversation deleted successfully
+ *         description: Conversation deleted 
  *       404:
  *         description: Conversation not found
  */
