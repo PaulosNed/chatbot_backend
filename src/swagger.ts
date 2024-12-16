@@ -12,7 +12,12 @@ const swaggerOptions = {
     },
     servers: [
       {
-        url: 'http://localhost:3000/api',
+        url: 'https://chatbot-backend-jc2k.onrender.com', // Deployed URL
+        description: 'Production server',
+      },
+      {
+        url: 'http://localhost:3000', // Localhost for development
+        description: 'Development server',
       },
     ],
   },
