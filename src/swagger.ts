@@ -12,7 +12,7 @@ const swaggerOptions = {
     },
     servers: [
       {
-        url: 'https://chatbot-backend-jc2k.onrender.com', // Deployed URL
+        url: 'https://chatbot-backend-jc2k.onrender.com/api', // Deployed URL
         description: 'Production server',
       },
       {
