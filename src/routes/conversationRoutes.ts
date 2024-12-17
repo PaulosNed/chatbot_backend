@@ -9,15 +9,15 @@ const conversationRoutes = Router();
  *   post:
  *     summary: Create a new conversation
  *     requestBody:
- *       required: true
+ *       required: false
  *       content:
  *         application/json:
  *           schema:
  *             type: object
  *             properties:
- *               title:
- *                 type: string
- *                 description: Title of the conversation
+ *               userId:
+ *                 type: integer
+ *                 description: ID of the user
  *     responses:
  *       201:
  *         description: Conversation created successfully
@@ -32,6 +32,13 @@ const conversationRoutes = Router();
  *                 title:
  *                   type: string
  *                   description: Title of the conversation
+ *                 userId:
+ *                   type: integer
+ *                   description: ID of the user
+ *                 createdAt:
+ *                   type: string
+ *                   format: date-time
+ *                   description: Creation date of the conversation
  */
 conversationRoutes.post('/conversations', createConversation);
 

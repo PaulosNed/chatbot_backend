@@ -4,17 +4,29 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 export const createConversation = async (req: Request, res: Response) => {
-  console.log('Request body:', req.body);
-  const { title, userId = 1 } = req.body; // Provide a default user ID of 1
-  console.log('Title:', title);
+  console.log('Received request to create a conversation');
+  let { userId  } = req.body; // Provide a default user ID of 1
+  userId = 1
   console.log('User ID:', userId);
 
   try {
+    // Create the conversation with a temporary title
     const conversation = await prisma.conversation.create({
-      data: { title, userId },
+      data: { title: 'Temporary Title', userId },
     });
-    console.log('Created conversation:', conversation);
-    res.status(201).json(conversation);
+
+    // Generate the unique title using the conversation ID
+    const title = `Conversation ${conversation.id}`;
+    console.log('Generated title:', title);
+
+    // Update the conversation with the unique title
+    const updatedConversation = await prisma.conversation.update({
+      where: { id: conversation.id },
+      data: { title },
+    });
+
+    console.log('Created conversation:', updatedConversation);
+    res.status(201).json(updatedConversation);
   } catch (error) {
     console.error('Error creating conversation:', error);
     res.status(500).json({ error: 'Failed to create conversation' });
