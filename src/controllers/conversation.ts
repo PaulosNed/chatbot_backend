@@ -67,10 +67,24 @@ export const getConversationById = async (req: Request, res: Response) => {
 
 export const deleteConversation = async (req: Request, res: Response) => {
   const { id } = req.params;
+  console.log('Received request to delete conversation with ID:', id);
+
   try {
-    await prisma.conversation.delete({ where: { id: Number(id) } });
-    res.status(200).json({ message: 'Conversation deleted' });
+    // Delete related messages first
+    const deletedMessages = await prisma.message.deleteMany({
+      where: { conversationId: Number(id) },
+    });
+    console.log('Deleted related messages:', deletedMessages);
+
+    // Delete the conversation
+    const deletedConversation = await prisma.conversation.delete({
+      where: { id: Number(id) },
+    });
+    console.log('Deleted conversation:', deletedConversation);
+
+    res.status(200).json({ message: 'Conversation and related messages deleted' });
   } catch (error) {
+    console.error('Error deleting conversation:', error);
     res.status(500).json({ error: 'Failed to delete conversation' });
   }
 };
