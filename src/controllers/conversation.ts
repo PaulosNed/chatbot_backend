@@ -25,12 +25,31 @@ export const getConversations = async (req: Request, res: Response) => {
   try {
     const conversations = await prisma.conversation.findMany({
         include: {
-          messages: true, // Include related messages
+          messages: false, // Include related messages
         },
       });
     res.status(200).json(conversations);
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch conversations' });
+  }
+};
+
+export const getConversationById = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  try {
+    const conversation = await prisma.conversation.findUnique({
+      where: { id: Number(id) },
+      include: {
+        messages: true, // Include related messages
+      },
+    });
+    if (conversation) {
+      res.status(200).json(conversation);
+    } else {
+      res.status(404).json({ error: 'Conversation not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch conversation' });
   }
 };
 
