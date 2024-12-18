@@ -40,7 +40,7 @@ export const getConversations = async (req: Request, res: Response) => {
         messages: false, // Include related messages
       },
       orderBy: {
-        createdAt: 'asc', // Order by creation date from oldest to newest
+        createdAt: 'desc', // Order by creation date from oldest to newest
       },
     });
     res.status(200).json(conversations);
